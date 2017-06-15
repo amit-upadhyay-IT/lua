@@ -19,9 +19,10 @@ end
 
 -- now find intersection
 local intersectedVal = redis.call("sinter", setsTable[1], setsTable[2]) -- finding first intersection because atleast we will have two sets
-
+local new_updated_set = ""
 for i = 3, noOfArgs, 1 do
-	intersectedVal = redis.call("sinter", intersectedVal, setsTable[i])
+	new_updated_set = tostring(intersectedVal)
+	intersectedVal = redis.call("sinter", new_updated_set, setsTable[i])
 end
 
 local allString = ""
