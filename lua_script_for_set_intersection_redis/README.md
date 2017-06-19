@@ -41,22 +41,32 @@ Example:
 
 
 AIM 1.1: To filter the meetings which are open and has meeting type email :
+
 Example of clients sets:
+
 We fire following command
+
  "meeting_type:email" ∩ "meeting_status:open". and 
+
 We get set named as FilteredSet containing following interactionId - {11, 19}
 
+
 AIM 1.2 : Applying Client Security
+
 For user:1
 
-Iterate through meeting ids  in FilteredSet
-Get client Id from hash-set.
-if client Id ∈ clients_for_user:1
-Yes, Add it in the array/set
+- Iterate through meeting ids  in FilteredSet
+- Get client Id from hash-set.
+- if client Id ∈ clients_for_user:1
+    -Yes, Add it in the array/set
+
 
 AIM 1.3 : Sort the Filtered data
+
 Sort the data obtained according to the users requirement. If required we will sort using external keys.
+
 To sort meeting Ids according to meeting date, we make a sorted set.
+
 Eg:
 
 
@@ -74,13 +84,18 @@ Eg:
                 
                 
 Now we perform :
+
 "FilteredSet" ∩ "meeting_date"
+
 Store the intersected set as "SortedFilteredSet".
 
 
+
 AIM 1.4 : Limit the "SortedFilteredSet".
+
 Limit the data as per the parameters passed i.e. paging OFFSET and display_count.
 
 
 AIM 1.5 : Get details from hashset
+
 Fetch the details from the HashSet using the meeting Ids.
