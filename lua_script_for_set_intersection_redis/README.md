@@ -18,26 +18,26 @@ We will be maintaining following 6 sets/data structure in Redis
 Example:
 
 
-Set Name	                Set content (meetingId)
-meeting_type:email_ins_10	11, 12, 15, 16, 19, 20
-meeting_type:sms_ins_10 	11, 13, 15, 17, 19, 21
-meeting_status:open_ins_10	11, 13, 17, 19, 23
-meeting_status:close_ins_10	10, 12, 14, 16, 18, 20
+    Set Name	                Set content (meetingId)
+    meeting_type:email_ins_10	11, 12, 15, 16, 19, 20
+    meeting_type:sms_ins_10 	11, 13, 15, 17, 19, 21
+    meeting_status:open_ins_10	11, 13, 17, 19, 23
+    meeting_status:close_ins_10	10, 12, 14, 16, 18, 20
 
 
-Set Name	        Set content (clientId)
-clients_for_user:1	7, 9, 11, 47
-clients_for_user:2	1, 2, 3, 8, 10, 11
-clients_for_user:3	4, 6, 8, 10, 12, 14, 16, 20, 24
-clients_for_user:4	3, 6, 9, 12, 15, 18, 21, 24
+    Set Name	        Set content (clientId)
+    clients_for_user:1	7, 9, 11, 47
+    clients_for_user:2	1, 2, 3, 8, 10, 11
+    clients_for_user:3	4, 6, 8, 10, 12, 14, 16, 20, 24
+    clients_for_user:4	3, 6, 9, 12, 15, 18, 21, 24
 
 
 
-HASHSET 	JSON string 	client id
-meeting:11	details here	2
-meeting:15	details here	7
-meeting:19	details here	8
-meeting:23	details here	12
+    HASHSET 	JSON string 	client id
+    meeting:11	details here	2
+    meeting:15	details here	7
+    meeting:19	details here	8
+    meeting:23	details here	12
 
 
 AIM 1.1: To filter the meetings which are open and has meeting type email :
@@ -60,17 +60,17 @@ To sort meeting Ids according to meeting date, we make a sorted set.
 Eg:
 
 
-meeting_date	element (meeting_id)	weight
+    meeting_date	element (meeting_id)	weight
 
-                meeting:1	10062017
+                     meeting:1	    10062017
 
-                meeting:5	12062017
+                     meeting:5	    12062017
 
-                meeting:6	15062017
+                     meeting:6	    15062017
+    
+                     meeting:10	    16062017
 
-                meeting:10	16062017
-
-                meeting:12	19062017
+                     meeting:12	    19062017
                 
                 
 Now we perform :
