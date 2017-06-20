@@ -2,14 +2,21 @@
 
 --[[
 1) get user_id; (from keys[1])
-2) get meeting filtered set;
-3) get client_for_user:x set;
-4) iterate through meeting filtered set and get client id of that particular meeting from hashmap.
-	4.1) check if that client id is member of set "client_for_user:x"
-	4.2) store that meeting_id into a set, so that later we can perform sorting on that set.
+2) get sort_by parameter as KEYS[2]
+3) get start_limit and end_limit.
+4) get meeting filtered set;
+5) get client_for_user:x set;
+6) iterate through meeting filtered set and get client id of that particular meeting from hashmap.
+	6.1) check if that client id is member of set "client_for_user:x"
+	6.2) store that meeting_id into a set, so that later we can perform sorting on that set.
+7) sort the obtained filterd meeting set and apply limit over it.
 --]]
 
 local user_id = KEYS[1] --  get user_id;
+
+local sort_by = KEYS[2]
+local start_limit = KEYS[3]
+local end_limit = KEYS[4]
 
 local meeting_filter_set = redis.call("sinterstore", "sampleset1"..user_id,  unpack(ARGV)) -- meeting filtered set.
 local mfs = redis.call("sinter", unpack(ARGV)) -- meeting filtered set.
@@ -34,11 +41,13 @@ end
 -- get the members from set named "sampleset1"..user_id
 local security_level_filter = redis.call("smembers", "sampleset2"..user_id)
 
-return security_level_filter
+-- use security_level_filter set name to sort according to whatever is passed as keys[2]
+local sorted_content = redis.call("sort", "sampleset2"..user_id, "by", "*->score", "limit" , start_limit, end_limit);
+
+return sorted_content
 
 --[[
 Bugs:
 1) 	new elements get appended with old elements in the sets created in memory, eg : sampleset1..user_id,
-	sampleset2..user_id. this creates problem in getting the required meeting_ids after filtering. 
-
+	sampleset2..user_id. this creates problem in getting the required meeting_ids after filtering.
 --]]
