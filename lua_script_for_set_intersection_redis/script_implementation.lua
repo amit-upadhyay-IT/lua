@@ -22,7 +22,7 @@ local members_of_clients = redis.call("smembers", clients_for_user_set_name) -- 
 for _,key in ipairs(mfs) do
 	local obtained_client_ids = redis.call("HGET", 'meeting:'..key, "clientid")
 	-- check if clientid obtained is contained in "members_of_clients"
-	local val = redis.call("sismember", "sampleset1", obtained_client_ids)
+	local val = redis.call("sismember", clients_for_user_set_name, obtained_client_ids)
 	-- check if val is 0 or 1. If val == 1, store meeting:id into a set (or if val == 0, delete meetingid from the meeting_filtered_set)
 	if val == 1 then
 		redis.call("sadd", "sampleset2", key)
