@@ -34,7 +34,7 @@ for _,key in ipairs(mfs) do
 	local val = redis.call("sismember", clients_for_user_set_name, obtained_client_ids)
 	-- check if val is 0 or 1. If val == 1, store meeting:id into a set (or if val == 0, delete meetingid from the meeting_filtered_set)
 	if val == 1 then
-		redis.call("sadd", "sampleset2"..user_id, key)
+		redis.call("sadd", "sampleset2"..user_id, 'meeting:'..key)
 	end
 end
 
@@ -44,14 +44,14 @@ end
 local security_level_filter = redis.call("smembers", "sampleset2"..user_id)
 
 -- use security_level_filter set name to sort according to whatever is passed as keys[2]
-local sorted_content = redis.call("sort", "sampleset2"..user_id, "by", "*->score", "limit" , start_limit, end_limit);
+local sorted_content = redis.call("sort", "sampleset2"..user_id, "by", '*->'..sort_by, "limit" , start_limit, end_limit);
 
 local allString = ""
 
 -- fetch the details section from the hashmap of meeting:ids
 for k, value in ipairs(sorted_content) do
-	local details_str = redis.call("HGET", 'meeting:'..value, "details")
-	allString = allString..', '..details_str
+	local details_str = redis.call("HGET", value, "details")
+	allString = allString..', '..tostring(details_str)
 end
 
 
