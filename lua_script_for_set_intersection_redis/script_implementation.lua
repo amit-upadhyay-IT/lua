@@ -35,3 +35,10 @@ end
 local security_level_filter = redis.call("smembers", "sampleset2"..user_id)
 
 return security_level_filter
+
+--[[
+Bugs:
+1) 	new elements get appended with old elements in the sets created in memory, eg : sampleset1..user_id,
+	sampleset2..user_id. this creates problem in getting the required meeting_ids after filtering. 
+
+--]]
