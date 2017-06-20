@@ -10,6 +10,8 @@
 	6.1) check if that client id is member of set "client_for_user:x"
 	6.2) store that meeting_id into a set, so that later we can perform sorting on that set.
 7) sort the obtained filterd meeting set and apply limit over it.
+8) fetch the details from the meeting:id from the hashmap.
+	8.1) To fetch you can run a loop over available meeting ids and do 'hget key details'// key is the meeting_id
 --]]
 
 local user_id = KEYS[1] --  get user_id;
@@ -36,13 +38,16 @@ for _,key in ipairs(mfs) do
 	end
 end
 
---local val2 = redis.call("sort", "sampleset1", "get", "meeting:*->clientid")
+--[[local val2 = redis.call("sort", "sampleset1", "get", "meeting:*->clientid")--]]
 
 -- get the members from set named "sampleset1"..user_id
 local security_level_filter = redis.call("smembers", "sampleset2"..user_id)
 
 -- use security_level_filter set name to sort according to whatever is passed as keys[2]
 local sorted_content = redis.call("sort", "sampleset2"..user_id, "by", "*->score", "limit" , start_limit, end_limit);
+
+-- fetch the details section from the hashmap of meeting:ids
+
 
 return sorted_content
 
