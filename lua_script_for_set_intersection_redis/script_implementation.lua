@@ -46,10 +46,16 @@ local security_level_filter = redis.call("smembers", "sampleset2"..user_id)
 -- use security_level_filter set name to sort according to whatever is passed as keys[2]
 local sorted_content = redis.call("sort", "sampleset2"..user_id, "by", "*->score", "limit" , start_limit, end_limit);
 
+local allString = ""
+
 -- fetch the details section from the hashmap of meeting:ids
+for k, value in ipairs(sorted_content) do
+	local details_str = redis.call("HGET", 'meeting:'..value, "details")
+	allString = allString..', '..details_str
+end
 
 
-return sorted_content
+return allString
 
 --[[
 Bugs:
