@@ -1,11 +1,11 @@
 -- generating clients_for_user:* sets
--- we shall create 100 of sets
+-- we shall create 10 of sets
 
-for i = 1, 100, 1 do
+for i = 1, 10, 1 do
     local set_name = 'clients_for_user:'..i
 
-    for j = 1, 10000, 1 do -- this will put about 10000 members
-        redis.call('sadd', set_name, math.random(100000)) -- so clients ids can range up 1 lac
+    for j = 1, 5000, 1 do -- this will put about 10000 members
+        redis.call('sadd', set_name, j) -- so clients ids can range up 1 lac
     end
 
 end
