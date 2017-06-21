@@ -3,18 +3,18 @@
 
 local meeting_typeemail_set
 
-for i = 1, 1000, 1 do
-    redis.call("sadd", "meeting_type:email", math.random(i, 10000))
+for i = 1, 100000, 1 do
+    redis.call("sadd", "meeting_type:email", math.random(i, 1000000))
 end
 
-for i = 1, 1000, 1 do
-    redis.call("sadd", "meeting_type:sms", math.random(i, 10000))
+for i = 1, 100000, 1 do
+    redis.call("sadd", "meeting_type:sms", math.random(i, 1000000))
 end
 
-for i = 1, 1000, 1 do
-    redis.call("sadd", "meeting_status:open", math.random(i, 10000))
+for i = 1, 100000, 1 do
+    redis.call("sadd", "meeting_status:open", math.random(i, 1000000))
 end
 
-for i = 1, 1000, 1 do
-    redis.call("sadd", "meeting_status:close", math.random(i, 10000))
+for i = 1, 100000, 1 do
+    redis.call("sadd", "meeting_status:close", math.random(i, 1000000))
 end
